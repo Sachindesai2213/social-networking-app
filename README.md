@@ -12,7 +12,7 @@ This is a Django-based social networking application designed to be easily deplo
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/social-networking-app.git
+git clone https://github.com/Sachindesai2213/social-networking-app.git
 cd social-networking-app
 ```
 

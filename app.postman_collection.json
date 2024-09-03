@@ -101,8 +101,31 @@
 				{
 					"name": "List - Pagination",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1Mzc5OTgzLCJpYXQiOjE3MjUzNzkwODMsImp0aSI6ImZkMmQ5Y2IzY2Q0MDQ1MzZhMTFmYjI2NTc2ZWUwMTUxIiwidXNlcl9pZCI6MX0.jHGWTxrTZlN0g7h_Ns6jGRKQpaZngthoo04umm1GViY"
+							}
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users/?page=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -171,7 +194,7 @@
 								"auth": {
 									"type": "bearer",
 									"bearer": {
-										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1Mzc4NjQyLCJpYXQiOjE3MjUzNzc3NDIsImp0aSI6ImI3ZjljMTgwOTE5ZDQxNGNhZTNmN2Q0NTE4NjZlZTliIiwidXNlcl9pZCI6MX0.Px7NmYCPLuQKicXtGGNSWdvOQytayv08bz0Z6G7SAnI"
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1Mzg2OTY4LCJpYXQiOjE3MjUzODYwNjgsImp0aSI6IjRjYWUzMTA4ZjQyZDQwMjY4MzcxMmMwN2FkNDI2YWUzIiwidXNlcl9pZCI6MX0.rkWPFkn8GCFx-xscV2oOl4HAZyP5wxAg9xs3h6_j6Jw"
 									}
 								},
 								"method": "PATCH",
@@ -193,8 +216,25 @@
 						{
 							"name": "Patch - Reject",
 							"request": {
-								"method": "GET",
-								"header": []
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1Mzg2OTY4LCJpYXQiOjE3MjUzODYwNjgsImp0aSI6IjRjYWUzMTA4ZjQyZDQwMjY4MzcxMmMwN2FkNDI2YWUzIiwidXNlcl9pZCI6MX0.rkWPFkn8GCFx-xscV2oOl4HAZyP5wxAg9xs3h6_j6Jw"
+									}
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "status",
+											"value": "R",
+											"type": "text"
+										}
+									]
+								},
+								"url": "{{url}}/api/friend-requests/2/"
 							},
 							"response": []
 						},
@@ -204,7 +244,7 @@
 								"auth": {
 									"type": "bearer",
 									"bearer": {
-										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1Mzc4NjQyLCJpYXQiOjE3MjUzNzc3NDIsImp0aSI6ImI3ZjljMTgwOTE5ZDQxNGNhZTNmN2Q0NTE4NjZlZTliIiwidXNlcl9pZCI6MX0.Px7NmYCPLuQKicXtGGNSWdvOQytayv08bz0Z6G7SAnI"
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1Mzg3MjE2LCJpYXQiOjE3MjUzODYzMTYsImp0aSI6ImYwNDYyZGJkMDNlOTRlMDFhNjRhZjk4MGNjOTg1MmIzIiwidXNlcl9pZCI6Mn0.W21YzcJheKnxDxKyBkSuwEE0nkSRisKYFprI0S9kjbw"
 									}
 								},
 								"method": "POST",
@@ -226,6 +266,28 @@
 					]
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
