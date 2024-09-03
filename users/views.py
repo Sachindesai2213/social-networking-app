@@ -5,6 +5,7 @@ from main.mixins import PermissionMixin
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
+from django.db import IntegrityError
 
 
 class LoginView(TokenObtainPairView):
@@ -46,6 +47,16 @@ class SignupViewSet(viewsets.ModelViewSet):
     http_method_names = ['post']
     permission_classes = []
     authentication_classes = []
+
+    def create(self, request, *args, **kwargs):
+        try:
+            data = super().create(request, *args, **kwargs)
+            return data
+        except IntegrityError as e:
+            return response.Response(
+                {'error': 'User with this email already exists'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 class UserViewSet(PermissionMixin, viewsets.ModelViewSet):

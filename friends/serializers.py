@@ -23,18 +23,27 @@ class FriendRequestSerializer(SerializerMixin, serializers.ModelSerializer):
             created_on__range=[from_datetime, to_datetime],
             created_by=request.user
         )
-        if self.instance and requests_sent.count() >= 3:
-            raise serializers.ValidationError(
-                'Limit exceeded for sending Friend Requests',
-                status.HTTP_400_BAD_REQUEST
-            )
-        if self.instance and self.instance.status:
-            statuses = {'A': 'Accepted', 'R': 'Rejected'}
-            current_status = statuses.get(self.instance.status, 'Attempted')
-            raise serializers.ValidationError(
-                f'Request already {current_status}',
-                status.HTTP_400_BAD_REQUEST
-            )
+        if self.instance:
+            # Condition to check request limits
+            if requests_sent.count() >= 3:
+                raise serializers.ValidationError(
+                    'Limit exceeded for sending Friend Requests',
+                    status.HTTP_400_BAD_REQUEST
+                )
+            # Condition to check if request is attempted
+            if self.instance.status:
+                statuses = {'A': 'Accepted', 'R': 'Rejected'}
+                current_status = statuses.get(self.instance.status, 'Attempted')
+                raise serializers.ValidationError(
+                    f'Request already {current_status}',
+                    status.HTTP_400_BAD_REQUEST
+                )
+            # Condition to validate if user is attempting only received request
+            if self.instance.to_user != request.user:
+                raise serializers.ValidationError(
+                    f'Unauthorized - Cannot attempt this Request',
+                    status.HTTP_401_UNAUTHORIZED
+                )
         return super().validate(attrs)
 
     def to_internal_value(self, data):
@@ -43,7 +52,7 @@ class FriendRequestSerializer(SerializerMixin, serializers.ModelSerializer):
         if not self.instance:
             friend_request_data['from_user'] = request.user.id
         else:
-            if friend_request_data['status'] == 'A':
+            if not self.instance.status and friend_request_data.get('status') == 'A':
                 Friend.objects.bulk_create([
                     Friend(
                         user=self.instance.from_user,

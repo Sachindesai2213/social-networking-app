@@ -27,3 +27,9 @@ class FriendRequestViewSet(PermissionMixin, viewsets.ModelViewSet):
     serializer_class = FriendRequestSerializer
     queryset = FriendRequest.objects.all()
     filterset_class = FriendRequestFilter
+
+    def filter_queryset(self, queryset):
+        # Filter out pending requests for Logged in user
+        filter_queryset = super().filter_queryset(queryset)
+        return filter_queryset.filter(
+            to_user=self.request.user, status__isnull=True)
