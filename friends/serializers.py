@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from rest_framework import serializers, status
+from rest_framework import serializers, status, validators
 from .models import Friend, FriendRequest
 from main.mixins import SerializerMixin
 
@@ -23,12 +23,18 @@ class FriendRequestSerializer(SerializerMixin, serializers.ModelSerializer):
             created_on__range=[from_datetime, to_datetime],
             created_by=request.user
         )
-        if requests_sent.count() >= 3:
+        if self.instance and requests_sent.count() >= 3:
             raise serializers.ValidationError(
                 'Limit exceeded for sending Friend Requests',
                 status.HTTP_400_BAD_REQUEST
             )
-        print(self.instance)
+        if self.instance and self.instance.status:
+            statuses = {'A': 'Accepted', 'R': 'Rejected'}
+            current_status = statuses.get(self.instance.status, 'Attempted')
+            raise serializers.ValidationError(
+                f'Request already {current_status}',
+                status.HTTP_400_BAD_REQUEST
+            )
         return super().validate(attrs)
 
     def to_internal_value(self, data):

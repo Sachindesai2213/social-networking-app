@@ -18,7 +18,8 @@ class FriendRequestFilter(drf_filters.FilterSet):
         fields = ['from_user', 'to_user', 'status']
 
     def status_filter(self, queryset, name, value):
-        print(value, queryset)
+        user = self.request.user
+        # Filter Pending Requests for Receiver
         if value == 'P':
-            return queryset.filter(status__isnull=True)
-        return queryset.filter(status=value)
+            return queryset.filter(status__isnull=True, to_user=user)
+        return queryset.filter(status=value, from_user=user)
