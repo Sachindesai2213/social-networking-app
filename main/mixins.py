@@ -33,9 +33,9 @@ class PermissionMixin:
     permission_classes = [
         permissions.IsAuthenticated
     ]
-    filter_backends = [filters.SearchFilter]
     pagination_class = CustomPagination
-    filter_backends = (drf_filters.DjangoFilterBackend,)
+    filter_backends = [drf_filters.DjangoFilterBackend,
+                       filters.SearchFilter]
 
     def perform_destroy(self, instance):
         instance.is_active = False

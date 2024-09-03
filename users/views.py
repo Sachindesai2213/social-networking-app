@@ -13,11 +13,17 @@ class LoginView(TokenObtainPairView):
         email = request.data.get('email')
         password = request.data.get('password')
 
+        if not email:
+            return response.Response(
+                {"error": "Email is mandatory"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
         # Custom authentication logic
         user = authenticate(email=email.lower(), password=password)
         if not user:
             return response.Response(
-                {"error": "Invalid username or password"},
+                {"error": "Invalid email or password"},
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
@@ -48,4 +54,9 @@ class UserViewSet(PermissionMixin, viewsets.ModelViewSet):
     """
     serializer_class = UserSerializer
     queryset = User.objects.filter(is_active=True)
-    search_fields = ['email']
+    search_fields = ['=email', 'first_name', 'last_name']
+
+    def filter_queryset(self, queryset):
+        # Exclude Logged in user
+        filter_queryset = super().filter_queryset(queryset)
+        return filter_queryset.exclude(id=self.request.user.id)

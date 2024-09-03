@@ -1,0 +1,237 @@
+{
+	"info": {
+		"_postman_id": "7e8650ac-d733-42dd-8c4a-44985f6b32ff",
+		"name": "Social Networking App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28897590"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "sachin.desai@socialnet.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Sachin@2023",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{url}}/api/login/"
+					},
+					"response": []
+				},
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "shyam.shetty@socialnet.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Shyam@2023",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "Shyam",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Shetty",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{url}}/api/signup/"
+					},
+					"response": []
+				},
+				{
+					"name": "List - Search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1Mzc5OTgzLCJpYXQiOjE3MjUzNzkwODMsImp0aSI6ImZkMmQ5Y2IzY2Q0MDQ1MzZhMTFmYjI2NTc2ZWUwMTUxIiwidXNlcl9pZCI6MX0.jHGWTxrTZlN0g7h_Ns6jGRKQpaZngthoo04umm1GViY"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users/?search=John",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "John"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List - Pagination",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Friends",
+			"item": [
+				{
+					"name": "Friends",
+					"item": [
+						{
+							"name": "List",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1Mzc4NjQyLCJpYXQiOjE3MjUzNzc3NDIsImp0aSI6ImI3ZjljMTgwOTE5ZDQxNGNhZTNmN2Q0NTE4NjZlZTliIiwidXNlcl9pZCI6MX0.Px7NmYCPLuQKicXtGGNSWdvOQytayv08bz0Z6G7SAnI"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "{{url}}/api/friends/"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Friend Requests",
+					"item": [
+						{
+							"name": "List - Pending",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1Mzc4NjQyLCJpYXQiOjE3MjUzNzc3NDIsImp0aSI6ImI3ZjljMTgwOTE5ZDQxNGNhZTNmN2Q0NTE4NjZlZTliIiwidXNlcl9pZCI6MX0.Px7NmYCPLuQKicXtGGNSWdvOQytayv08bz0Z6G7SAnI"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/friend-requests/?status=P",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"friend-requests",
+										""
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "P"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch - Accept",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1Mzc4NjQyLCJpYXQiOjE3MjUzNzc3NDIsImp0aSI6ImI3ZjljMTgwOTE5ZDQxNGNhZTNmN2Q0NTE4NjZlZTliIiwidXNlcl9pZCI6MX0.Px7NmYCPLuQKicXtGGNSWdvOQytayv08bz0Z6G7SAnI"
+									}
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "status",
+											"value": "A",
+											"type": "text"
+										}
+									]
+								},
+								"url": "{{url}}/api/friend-requests/1/"
+							},
+							"response": []
+						},
+						{
+							"name": "Patch - Reject",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Post - Send",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1Mzc4NjQyLCJpYXQiOjE3MjUzNzc3NDIsImp0aSI6ImI3ZjljMTgwOTE5ZDQxNGNhZTNmN2Q0NTE4NjZlZTliIiwidXNlcl9pZCI6MX0.Px7NmYCPLuQKicXtGGNSWdvOQytayv08bz0Z6G7SAnI"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "to_user",
+											"value": "5",
+											"type": "text"
+										}
+									]
+								},
+								"url": "{{url}}/api/friend-requests/"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://127.0.0.1:8000"
+		}
+	]
+}
