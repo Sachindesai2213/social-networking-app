@@ -8,6 +8,12 @@ class FriendSerializer(SerializerMixin, serializers.ModelSerializer):
 
     class Meta(SerializerMixin.Meta):
         model = Friend
+    
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['user'] = instance.user.get_full_name()
+        data['friend'] = instance.friend.get_full_name()
+        return data
 
 
 class FriendRequestSerializer(SerializerMixin, serializers.ModelSerializer):
@@ -52,7 +58,9 @@ class FriendRequestSerializer(SerializerMixin, serializers.ModelSerializer):
         if not self.instance:
             friend_request_data['from_user'] = request.user.id
         else:
-            if not self.instance.status and friend_request_data.get('status') == 'A':
+            if not self.instance.status and (
+                self.instance.to_user == request.user) and (
+                friend_request_data.get('status') == 'A'):
                 Friend.objects.bulk_create([
                     Friend(
                         user=self.instance.from_user,
@@ -66,3 +74,9 @@ class FriendRequestSerializer(SerializerMixin, serializers.ModelSerializer):
                     )
                 ])
         return super().to_internal_value(friend_request_data)
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['from_user'] = instance.from_user.get_full_name()
+        data['to_user'] = instance.from_user.get_full_name()
+        return data
